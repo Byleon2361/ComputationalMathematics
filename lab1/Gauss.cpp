@@ -41,37 +41,36 @@ main ()
   cout << endl;
 
   // Метод Гаусса
-  //(получение нулей под главной диагональю)
   float tmp;
   int k;
-  float *xx = new float[m];
+  float *res = new float[m];
 
   for (i = 0; i < n; i++)
     {
       tmp = matrix[i][i];
 
-      for (j = n; j >= i; j--)
+      for (j = n; j >= i; j--) // деление на элемент из главной диагонали
         matrix[i][j] /= tmp;
 
       for (j = i + 1; j < n; j++)
         {
           tmp = matrix[j][i];
-          for (k = n; k >= i; k--)
+          for (k = n; k >= i; k--) // зануляет значение под главной диагональю
             matrix[j][k] -= tmp * matrix[i][k];
         }
     }
-  //(получение нулей над главной диагональю)
-  xx[n - 1] = matrix[n - 1][n];
+
+  res[n - 1] = matrix[n - 1][n];
   for (i = n - 2; i >= 0; i--)
     {
-      xx[i] = matrix[i][n];
+      res[i] = matrix[i][n];
       for (j = i + 1; j < n; j++)
-        xx[i] -= matrix[i][j] * xx[j];
+        res[i] -= matrix[i][j] * res[j];
     }
 
   // Вывод
   for (i = 0; i < n; i++)
-    cout << xx[i] << " ";
+    cout << res[i] << " ";
   cout << endl;
 
   delete[] matrix;
